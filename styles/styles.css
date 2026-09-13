@@ -413,7 +413,20 @@ footer {
   .hero-note { max-width: 360px; }
   .content { padding-top: 34px; }
   .announcement { grid-template-columns: 58px 1fr; gap: 14px; padding: 18px; }
-  .arrow { display: none; }
+  .announcement-link {
+    grid-template-columns: 58px minmax(0, 1fr) auto;
+    border-left: 4px solid var(--green);
+  }
+  .announcement-link .arrow {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-size: 1.1rem;
+    line-height: 1;
+  }
   .bulletin { padding: 24px; }
   .bulletin-label { margin-bottom: 28px; }
   .reservation-card { padding: 20px; }
