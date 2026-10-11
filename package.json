@@ -1,0 +1,15 @@
+{
+  "name": "forest-ridge-ward-announcements",
+  "private": true,
+  "scripts": {
+    "generate": "node powerpoint/generate.js",
+    "prune": "node scripts/prune-expired-announcements.js"
+  },
+  "dependencies": {
+    "image-size": "^2.0.3",
+    "pptxgenjs": "^3.12.0"
+  },
+  "overrides": {
+    "image-size": "^2.0.3"
+  }
+}

@@ -35,7 +35,13 @@ function createAnnouncementCard(announcement, date) {
 
   const dateElement = document.createElement('div');
   dateElement.className = 'announcement-date';
-  dateElement.innerHTML = `<strong>${date.getDate()}</strong>${date.toLocaleString('en-US', { month: 'short' })}`;
+  if (date) {
+    const day = document.createElement('strong');
+    day.textContent = date.getDate();
+    dateElement.append(day, date.toLocaleString('en-US', { month: 'short' }));
+  } else {
+    dateElement.textContent = announcement.frequency;
+  }
 
   const content = document.createElement('div');
   const title = document.createElement('h3');
@@ -68,8 +74,18 @@ async function loadAnnouncements() {
     const announcements = await response.json();
     const upcomingAnnouncements = announcements
       .map(announcement => ({ announcement, date: parseCalendarDate(announcement.date) }))
-      .filter(({ date }) => date && date >= startOfToday())
-      .sort((first, second) => first.date - second.date);
+      .filter(({ announcement, date }) => announcement.frequency || (date && date >= startOfToday()))
+      .sort((first, second) => {
+        if (!first.date) {
+          return second.date ? 1 : 0;
+        }
+
+        if (!second.date) {
+          return -1;
+        }
+
+        return first.date - second.date;
+      });
 
     announcementsContainer.replaceChildren(
       ...upcomingAnnouncements.map(({ announcement, date }) => createAnnouncementCard(announcement, date))
